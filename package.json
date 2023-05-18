@@ -1,0 +1,15 @@
+{
+  "name": "fitet",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "leggi": "npx taiko leggi_classifica.js --observe"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "taiko": "1.3.4"
+  }
+}

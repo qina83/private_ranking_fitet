@@ -1,0 +1,67 @@
+<html>
+
+<head>
+    <link href="https://unpkg.com/material-components-web@latest/dist/material-components-web.min.css" rel="stylesheet">
+    <script src="https://unpkg.com/material-components-web@latest/dist/material-components-web.min.js"></script>
+</head>
+
+<body>
+    <ul class="mdc-list" id='lista-atleti'>
+    
+    </ul>
+</body>
+<script>
+    const atleti = [
+  {
+    nome: 'GIULIONI CRISTIANO',
+    dataNascita: '03/08/1983',
+    posizione: '4968',
+    storico: [ '4968', '4914', '4886', '4952', '4947' ]
+  },
+  {
+    nome: 'PAUCCHI FABIO',
+    dataNascita: '20/02/1965',
+    posizione: '4106',
+    storico: [ '4106', '4348', '4375', '4345', '4312' ]
+  },
+  {
+    nome: 'PAUCCHI MARTINA',
+    dataNascita: '29/08/1999',
+    posizione: '236',
+    storico: [ '236', '254', '253', '247', '240' ]
+  },
+  {
+    nome: 'SCHIAROLI ALESSANDRO',
+    dataNascita: '16/09/1969',
+    posizione: '5201',
+    storico: [ '5201', '5141', '5113', '5104', '5103' ]
+  }
+];
+
+    document.addEventListener('DOMContentLoaded', function () {
+        const root = document.getElementById("lista-atleti");
+
+        for(let i = 0; i<atleti.length; i++){
+            const li = document.createElement("li");
+            li.className = 'mdc-list-item';
+            root.appendChild(li);
+
+            const spanClick = document.createElement("span");
+            spanClick.className = 'mdc-list-item__ripple';
+            li.appendChild(spanClick);
+            
+
+            const span = document.createElement("span");
+            span.className = 'mdc-list-item__text';
+            span.innerText = atleti[i].nome;
+            li.appendChild(span);
+
+            const spanRank = document.createElement("span");
+            spanRank.className = 'mdc-list-item__meta';
+            spanRank.innerText = atleti[i].posizione;
+            li.appendChild(spanRank);
+        }
+    }, false);
+</script>
+
+</html>
