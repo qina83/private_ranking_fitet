@@ -1,16 +1,31 @@
-
+const fs = require('fs');
 const { openBrowser, goto, write, click, waitFor, highlight, $, closeBrowser } = require('taiko');
 
-function sortByNomeAtleta( a, b ) {
-    if ( a.nome < b.nome ){
-      return -1;
+function sortByNomeAtleta(a, b) {
+    if (a.nome < b.nome) {
+        return -1;
     }
-    if ( a.nome > b.nome ){
-      return 1;
+    if (a.nome > b.nome) {
+        return 1;
     }
     return 0;
-  }
-  
+}
+
+
+function createIndex(atleti) {
+    return fs.readFile('./index_template.html', 'utf8', function (err, data) {
+        if (err) {
+            return console.log(err);
+        }
+
+        const stringAtleti = JSON.stringify(atleti)
+
+        const content = data.replace(/#ALTETI/g, stringAtleti);
+
+
+        fs.writeFileSync('./index.html', content, { encoding: 'utf8', flag: 'w' })
+    });
+}
 
 
 
@@ -24,19 +39,19 @@ function sortByNomeAtleta( a, b ) {
             nome: 'GIULIONI CRISTIANO',
             dataNascita: '03/08/1983'
         },
-        {
-            nome: 'SCHIAROLI ALESSANDRO',
-            dataNascita: '16/09/1969'
-        },
-        {
-            nome: 'PAUCCHI FABIO',
-            dataNascita: '20/02/1965'
-        },
-        {
-            nome: 'PAUCCHI MARTINA',
-            dataNascita: '29/08/1999'
-        }
-        )
+        // {
+        //     nome: 'SCHIAROLI ALESSANDRO',
+        //     dataNascita: '16/09/1969'
+        // },
+        // {
+        //     nome: 'PAUCCHI FABIO',
+        //     dataNascita: '20/02/1965'
+        // },
+        // {
+        //     nome: 'PAUCCHI MARTINA',
+        //     dataNascita: '29/08/1999'
+        // }
+    )
 
     const idAtletaInputId = '#topic_title';
 
@@ -48,21 +63,21 @@ function sortByNomeAtleta( a, b ) {
         await click(atleta.nome + ' (' + atleta.dataNascita + ')');
         await waitFor(2000);
 
-        atleti[i].posizione = await $('.badge').text();      
-        
+        atleti[i].posizione = await $('.badge').text();
+
         await click('classifica al');
         await waitFor(1000);
         await click('Storico classifica');
         await waitFor(1000);
 
         atleti[i].storico = [];
-        for(let j = 2; j<7; j++){
-            try{
-                await highlight(tableCell({row:j, col:2}, below('Storico posizioni nella classifica individuale')));
-                let storico = await tableCell({row:j, col:2}, below('Storico posizioni nella classifica individuale')).text()
+        for (let j = 2; j < 7; j++) {
+            try {
+                await highlight(tableCell({ row: j, col: 2 }, below('Storico posizioni nella classifica individuale')));
+                let storico = await tableCell({ row: j, col: 2 }, below('Storico posizioni nella classifica individuale')).text()
                 atleti[i].storico.push(storico)
             }
-            catch{
+            catch {
                 break;
             }
         }
@@ -72,5 +87,9 @@ function sortByNomeAtleta( a, b ) {
     console.log(atleti.sort(sortByNomeAtleta));
 
 
+    await createIndex(atleti);
+
     await closeBrowser();
+
+
 })();
