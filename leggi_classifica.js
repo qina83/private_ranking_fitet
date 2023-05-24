@@ -1,4 +1,6 @@
 const fs = require('fs');
+const simpleGit = require("simple-git");
+
 const { openBrowser, goto, write, click, waitFor, highlight, $, closeBrowser } = require('taiko');
 
 function sortByNomeAtleta(a, b) {
@@ -13,46 +15,24 @@ function sortByNomeAtleta(a, b) {
 
 
 function createIndex(atleti) {
-    return fs.readFile('./index_template.html', 'utf8', function (err, data) {
-        if (err) {
-            return console.log(err);
-        }
+    const template = fs.readFileSync('./index_template.html', 'utf8');
 
-        const stringAtleti = JSON.stringify(atleti)
+    const stringAtleti = JSON.stringify(atleti)
+    const content = template.replace(/#ALTETI/g, stringAtleti);
 
-        const content = data.replace(/#ALTETI/g, stringAtleti);
+    fs.writeFileSync('./index.html', content, { encoding: 'utf8', flag: 'w' })
 
-
-        fs.writeFileSync('./index.html', content, { encoding: 'utf8', flag: 'w' })
-    });
 }
 
+async function publish() {
+    const git = simpleGit.default();
+    git.add('./index.html');
+    git.commit('aggiornamento classifica del ' + (new Date()).toDateString());
+    git.push();
+}
 
-
-(async () => {
+async function readClassifica(atleti) {
     await openBrowser();
-
-
-    const atleti = [];
-    atleti.push(
-        {
-            nome: 'GIULIONI CRISTIANO',
-            dataNascita: '03/08/1983'
-        },
-        // {
-        //     nome: 'SCHIAROLI ALESSANDRO',
-        //     dataNascita: '16/09/1969'
-        // },
-        // {
-        //     nome: 'PAUCCHI FABIO',
-        //     dataNascita: '20/02/1965'
-        // },
-        // {
-        //     nome: 'PAUCCHI MARTINA',
-        //     dataNascita: '29/08/1999'
-        // }
-    )
-
     const idAtletaInputId = '#topic_title';
 
     for (let i = 0; i < atleti.length; i++) {
@@ -83,13 +63,43 @@ function createIndex(atleti) {
         }
     }
 
+    await closeBrowser();
+    return atleti;
+}
+
+
+(async () => {
+
+
+    let atleti = [];
+    atleti.push(
+        {
+            nome: 'GIULIONI CRISTIANO',
+            dataNascita: '03/08/1983'
+        },
+        // {
+        //     nome: 'SCHIAROLI ALESSANDRO',
+        //     dataNascita: '16/09/1969'
+        // },
+        // {
+        //     nome: 'PAUCCHI FABIO',
+        //     dataNascita: '20/02/1965'
+        // },
+        // {
+        //     nome: 'PAUCCHI MARTINA',
+        //     dataNascita: '29/08/1999'
+        // }
+    )
+
+
+    //atleti = await readClassifica();
 
     console.log(atleti.sort(sortByNomeAtleta));
 
 
     await createIndex(atleti);
 
-    await closeBrowser();
 
 
+    await publish();
 })();
