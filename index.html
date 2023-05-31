@@ -7,16 +7,17 @@
 
 <body>
     <ul class="mdc-list" id='lista-atleti'>
-    
+
     </ul>
 </body>
 <script>
-    const atleti = [{"nome":"CONTI ANGELA","dataNascita":"14/10/1963","posizione":"373","storico":["373","361","362","359","353"]},{"nome":"GIULIONI CRISTIANO","dataNascita":"03/08/1983","posizione":"4968","storico":["4968","4914","4886","4952","4947"]},{"nome":"PAUCCHI FABIO","dataNascita":"20/02/1965","posizione":"4106","storico":["4106","4348","4375","4345","4312"]},{"nome":"PAUCCHI MARTINA","dataNascita":"29/08/1999","posizione":"236","storico":["236","254","253","247","240"]},{"nome":"SCHIAROLI ALESSANDRO","dataNascita":"16/09/1969","posizione":"5201","storico":["5201","5141","5113","5104","5103"]}];
+    const atletiMaschi = [{"nome":"GIULIONI CRISTIANO","dataNascita":"03/08/1983","sex":"M","posizione":"4968","storico":["4968","4914","4886","4952","4947"]}];
+    const atletiFemmine = [{"nome":"CONTI ANGELA","dataNascita":"14/10/1963","sex":"F","posizione":"373","storico":["373","361","362","359","353"]}];
 
-    document.addEventListener('DOMContentLoaded', function () {
-        const root = document.getElementById("lista-atleti");
+    function listaAtleti(atleti) {
+        for (let i = 0; i < atleti.length; i++) {
+            const atleta = atleti[i];
 
-        for(let i = 0; i<atleti.length; i++){
             const li = document.createElement("li");
             li.className = 'mdc-list-item';
             root.appendChild(li);
@@ -24,18 +25,30 @@
             const spanClick = document.createElement("span");
             spanClick.className = 'mdc-list-item__ripple';
             li.appendChild(spanClick);
-            
+
 
             const span = document.createElement("span");
             span.className = 'mdc-list-item__text';
-            span.innerText = atleti[i].nome;
+            span.innerText = atleta.nome;
             li.appendChild(span);
 
             const spanRank = document.createElement("span");
             spanRank.className = 'mdc-list-item__meta';
-            spanRank.innerText = atleti[i].posizione;
+            spanRank.innerText = atleta.posizione;
             li.appendChild(spanRank);
         }
+    }
+
+    document.addEventListener('DOMContentLoaded', function () {
+        const root = document.getElementById("lista-atleti");
+        listaAtleti(atletiMaschi);
+        const br = document.createElement("br");
+        root.appendChild(br);
+        root.appendChild(br);
+        root.appendChild(br);
+        root.appendChild(br);
+        listaAtleti(atletiFemmine);
+   
     }, false);
 </script>
 
