@@ -7,16 +7,18 @@
 
 <body>
     <ul class="mdc-list" id='lista-atleti'>
-    
+
     </ul>
 </body>
 <script>
-    const atleti = #ALTETI;
+    const atletiMaschi = #ALTETI_MASCHI;
+    const atletiFemmine = #ALTETI_FEMMINE;
 
-    document.addEventListener('DOMContentLoaded', function () {
+    function listaAtleti(atleti) {
         const root = document.getElementById("lista-atleti");
+        for (let i = 0; i < atleti.length; i++) {
+            const atleta = atleti[i];
 
-        for(let i = 0; i<atleti.length; i++){
             const li = document.createElement("li");
             li.className = 'mdc-list-item';
             root.appendChild(li);
@@ -24,18 +26,35 @@
             const spanClick = document.createElement("span");
             spanClick.className = 'mdc-list-item__ripple';
             li.appendChild(spanClick);
-            
+
 
             const span = document.createElement("span");
             span.className = 'mdc-list-item__text';
-            span.innerText = atleti[i].nome;
+            span.innerText = atleta.nome;
             li.appendChild(span);
 
             const spanRank = document.createElement("span");
             spanRank.className = 'mdc-list-item__meta';
-            spanRank.innerText = atleti[i].posizione;
+            spanRank.innerText = atleta.posizione;
             li.appendChild(spanRank);
+
+            const variazione = document.createElement("span");
+            variazione.className = 'mdc-list-item__meta';
+            variazione.innerText = atleta.variazione;
+            li.appendChild(variazione); 
         }
+    }
+
+    document.addEventListener('DOMContentLoaded', function () {
+        const root = document.getElementById("lista-atleti");
+        listaAtleti(atletiMaschi);
+        const br = document.createElement("br");
+        root.appendChild(br);
+        root.appendChild(br);
+        root.appendChild(br);
+        root.appendChild(br);
+        listaAtleti(atletiFemmine);
+   
     }, false);
 </script>
 

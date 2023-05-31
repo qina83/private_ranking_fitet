@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "leggi": "npx taiko leggi_classifica.js --observe"
+    "leggi": "npx taiko leggi_classifica.js"
   },
   "author": "",
   "license": "ISC",
