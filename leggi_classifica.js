@@ -19,10 +19,10 @@ function createIndex(atletiMaschi, atletiFemmine) {
     const template = fs.readFileSync('./index_template.html', 'utf8');
 
     const stringAtletiMaschi = JSON.stringify(atletiMaschi)
-    let content = template.replace(/#ALTETI_MASCHI/g, stringAtletiMaschi);
+    let content = template.replace(/#ATLETI_MASCHI/g, stringAtletiMaschi);
 
     const stringAtletiFemmine = JSON.stringify(atletiFemmine)
-    content = content.replace(/#ALTETI_FEMMINE/g, stringAtletiFemmine);
+    content = content.replace(/#ATLETI_FEMMINE/g, stringAtletiFemmine);
 
     fs.writeFileSync('./index.html', content, { encoding: 'utf8', flag: 'w' })
 
@@ -47,7 +47,7 @@ async function readClassifica(atleti) {
         await click(atleta.nome + ' (' + atleta.dataNascita + ')');
         await waitFor(2000);
 
-        atleti[i].posizione = await $('.badge').text();
+        atleti[i].posizione = parseInt(await $('.badge').text());
 
         await click('classifica al');
         await waitFor(1000);
@@ -60,7 +60,7 @@ async function readClassifica(atleti) {
             try {
                 await highlight(tableCell({ row: j, col: 2 }, below('Storico posizioni nella classifica individuale')));
                 let storico = await tableCell({ row: j, col: 2 }, below('Storico posizioni nella classifica individuale')).text()
-                atleti[i].storico.push(storico)
+                atleti[i].storico.unshift(parseInt(storico))
             }
             catch {
                 break;
@@ -68,10 +68,12 @@ async function readClassifica(atleti) {
         }
 
         try{
-                if (atleti[i].storico[0] < atleti[i].storico[1]){
+                const storico = atleti[i].storico;
+
+                if (storico[storico.length-2] > storico[storico.length-1]){
                     atleti[i].variazione = '+';
                 }
-                if (atleti[i].storico[0] > atleti[i].storico[1]){
+                if (storico[storico.length-2] < storico[storico.length-1]){
                     atleti[i].variazione = '-';
                 }
         }
@@ -86,36 +88,6 @@ async function readClassifica(atleti) {
 
 (async () => {
 
-
-   // let atleti = [];
-    //atleti.push(
-        // {
-        //     nome: 'GIULIONI CRISTIANO',
-        //     dataNascita: '03/08/1983',
-        //     sex: 'M'
-        // },
-        // {
-        //     nome: 'SCHIAROLI ALESSANDRO',
-        //     dataNascita: '16/09/1969',
-        //     sex: 'M'
-        // },
-        // {
-        //     nome: 'PAUCCHI FABIO',
-        //     dataNascita: '20/02/1965',
-        //     sex: 'M'
-        // },
-        // {
-        //     nome: 'PAUCCHI MARTINA',
-        //     dataNascita: '29/08/1999',
-        //     sex: 'F'
-        // },
-        // {
-        //     nome: 'CONTI ANGELA',
-        //     dataNascita: '14/10/1963',
-        //     sex: 'F'
-        // }
-   // )
-
     maschi = atleti.filter(x => x.sex === 'M');
     femmine = atleti.filter(x => x.sex === 'F');
 
@@ -127,9 +99,7 @@ async function readClassifica(atleti) {
     classificaMaschi.sort(sortAtleti);
     classifcaFemmine.sort(sortAtleti);
 
-
     await createIndex(classificaMaschi, classifcaFemmine);
-
 
 
     await publish();
