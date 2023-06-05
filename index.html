@@ -49,11 +49,11 @@
 
 </body>
 <script>
-    const atletiMaschi = [{"nome":"PIERPAOLI NICOLO'","dataNascita":"09/06/2003","sex":"M","posizione":126,"storico":[126,148,192,189,165,146,115,136,114,101],"variazione":"+"},{"nome":"CONTE LEONARDO","dataNascita":"04/05/2001","sex":"M","posizione":149,"storico":[149,180,168,154,194,203,170,163,191,183],"variazione":"+"},{"nome":"BARCHIESI GABRIELE","dataNascita":"01/08/1997","sex":"M","posizione":177,"storico":[177,188,172,176,171,159,125,133,130,119],"variazione":"+"},{"nome":"GIAMPAOLETTI MICHELE","dataNascita":"07/10/2006","sex":"M","posizione":251,"storico":[251,260,276,278,291,209,290,328,346,365],"variazione":"+"},{"nome":"MELUCCI MICHELE","dataNascita":"23/03/2000","sex":"M","posizione":254,"storico":[254,234,260,255,238,255,303,280,264,243],"variazione":"-"},{"nome":"APPOLLONI NICOLO'","dataNascita":"16/12/1996","sex":"M","posizione":450,"storico":[450,431,409,408,388,369,357,333,261,254],"variazione":"-"},{"nome":"CAVALLO MATTEO","dataNascita":"15/08/1994","sex":"M","posizione":491,"storico":[491,527,588,596,635,565,551,538,516,600],"variazione":"+"},{"nome":"PERSICHINI RAFFAELE","dataNascita":"02/12/1997","sex":"M","posizione":573,"storico":[573,553,537,563,564,621,506,424,424,387],"variazione":"-"},{"nome":"PAUCCHI FABIO","dataNascita":"20/02/1965","sex":"M","posizione":4106,"storico":[4106,4348,4375,4345,4312,4436,4509,4550,null,null],"variazione":"+"},{"nome":"GIULIONI CRISTIANO","dataNascita":"03/08/1983","sex":"M","posizione":4968,"storico":[4968,4914,4886,4952,4947,5224,5114,5258,5131,4965],"variazione":"-"},{"nome":"SCHIAROLI ALESSANDRO","dataNascita":"16/09/1969","sex":"M","posizione":5201,"storico":[5201,5141,5113,5104,5103,5125,5148,5142,4884,4714],"variazione":"-"}];
-    const atletiFemmine = [{"nome":"PAUCCHI MARTINA","dataNascita":"29/08/1999","sex":"F","posizione":236,"storico":[236,254,253,247,240,234,223,219,213,null],"variazione":"+"},{"nome":"CONTI ANGELA","dataNascita":"14/10/1963","sex":"F","posizione":373,"storico":[373,361,362,359,353,348,341,333,334,319],"variazione":"-"}];
+    const atletiMaschi = [{"nome":"PIERPAOLI NICOLO'","dataNascita":"09/06/2003","sex":"M","posizione":126,"storico":[101,114,136,115,146,165,189,192,148,126],"variazione":"-"},{"nome":"CONTE LEONARDO","dataNascita":"04/05/2001","sex":"M","posizione":149,"storico":[183,191,163,170,203,194,154,168,180,149],"variazione":"-"},{"nome":"BARCHIESI GABRIELE","dataNascita":"01/08/1997","sex":"M","posizione":177,"storico":[119,130,133,125,159,171,176,172,188,177],"variazione":"-"},{"nome":"GIAMPAOLETTI MICHELE","dataNascita":"07/10/2006","sex":"M","posizione":251,"storico":[365,346,328,290,209,291,278,276,260,251],"variazione":"-"},{"nome":"MELUCCI MICHELE","dataNascita":"23/03/2000","sex":"M","posizione":254,"storico":[243,264,280,303,255,238,255,260,234,254],"variazione":"+"},{"nome":"APPOLLONI NICOLO'","dataNascita":"16/12/1996","sex":"M","posizione":450,"storico":[254,261,333,357,369,388,408,409,431,450],"variazione":"+"},{"nome":"CAVALLO MATTEO","dataNascita":"15/08/1994","sex":"M","posizione":491,"storico":[600,516,538,551,565,635,596,588,527,491],"variazione":"-"},{"nome":"PERSICHINI RAFFAELE","dataNascita":"02/12/1997","sex":"M","posizione":573,"storico":[387,424,424,506,621,564,563,537,553,573],"variazione":"+"},{"nome":"PAUCCHI FABIO","dataNascita":"20/02/1965","sex":"M","posizione":4106,"storico":[null,null,4550,4509,4436,4312,4345,4375,4348,4106],"variazione":"-"},{"nome":"GIULIONI CRISTIANO","dataNascita":"03/08/1983","sex":"M","posizione":4968,"storico":[4965,5131,5258,5114,5224,4947,4952,4886,4914,4968],"variazione":"+"},{"nome":"SCHIAROLI ALESSANDRO","dataNascita":"16/09/1969","sex":"M","posizione":5201,"storico":[4714,4884,5142,5148,5125,5103,5104,5113,5141,5201],"variazione":"+"}];
+    const atletiFemmine = [{"nome":"PAUCCHI MARTINA","dataNascita":"29/08/1999","sex":"F","posizione":236,"storico":[null,213,219,223,234,240,247,253,254,236],"variazione":"-"},{"nome":"CONTI ANGELA","dataNascita":"14/10/1963","sex":"F","posizione":373,"storico":[319,334,333,341,348,353,359,362,361,373],"variazione":"+"}];
 
     const accordionItemTemplate = `
-            <div class="atleta ##genere" onclick="aggiornaAndamento()">
+            <div class="atleta ##genere" onclick="aggiornaAndamento('##genere', ##IndiceAtleta)">
                           <div class="row w-100">  
                             <div class="col-1">                                
                                 ##VariazioneAtleta</div>
@@ -70,6 +70,7 @@
             let atletaTemplate = accordionItemTemplate.replaceAll('##NomeAtleta', atleta.nome);
             atletaTemplate = atletaTemplate.replaceAll('##genere', genere);
             atletaTemplate = atletaTemplate.replaceAll('##PosizioneAtleta', atleta.posizione);
+            atletaTemplate = atletaTemplate.replaceAll('##IndiceAtleta', i);
             atletaTemplate = atletaTemplate.replaceAll('##StoricoAlteta', atleta.storico.join(' - '));
 
             if (atleta.variazione === '+') {
@@ -85,6 +86,7 @@
 
         }
     }
+
 
     function createChart() {
 
@@ -108,9 +110,15 @@
 
     const chartAndamento = createChart();
 
-    function aggiornaAndamento() {
-        console.log("AAAA");
-        updateData(chartAndamento, [1,2,3,4,5], [1,2,3,4,5])
+    function aggiornaAndamento(genere, indice) {
+        let lista = atletiMaschi;
+        if (genere === 'femminile') {
+            lista = atletiFemmine;
+        }
+
+        const posizioni = lista[indice].storico;
+        const labels = [...Array(posizioni.length).keys()];
+        updateData(chartAndamento, [1, 2, 3, 4, 5], posizioni)
     }
 
     function updateData(chart, labels, data) {
