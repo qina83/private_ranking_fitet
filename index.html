@@ -4,7 +4,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
-   
+
 </head>
 
 <body>
@@ -12,6 +12,12 @@
         <div class="row">
             <div class="col">
                 <div class="accordion" id='lista-atleti-maschi'>
+
+                </div>
+                </br>
+                </br>
+                </br>
+                <div class="accordion" id='lista-atleti-femmine'>
 
                 </div>
             </div>
@@ -24,7 +30,7 @@
 <script>
     const atletiMaschi = [{"nome":"PIERPAOLI NICOLO'","dataNascita":"09/06/2003","sex":"M","posizione":"126","storico":["126","148","192","189","165","146","115","136","114","101"],"variazione":"+"},{"nome":"CONTE LEONARDO","dataNascita":"04/05/2001","sex":"M","posizione":"149","storico":["149","180","168","154","194","203","170","163","191","183"],"variazione":"+"},{"nome":"BARCHIESI GABRIELE","dataNascita":"01/08/1997","sex":"M","posizione":"177","storico":["177","188","172","176","171","159","125","133","130","119"],"variazione":"+"},{"nome":"GIAMPAOLETTI MICHELE","dataNascita":"07/10/2006","sex":"M","posizione":"251","storico":["251","260","276","278","291","209","290","328","346","365"],"variazione":"+"},{"nome":"MELUCCI MICHELE","dataNascita":"23/03/2000","sex":"M","posizione":"254","storico":["254","234","260","255","238","255","303","280","264","243"],"variazione":"-"},{"nome":"PAUCCHI FABIO","dataNascita":"20/02/1965","sex":"M","posizione":"4106","storico":["4106","4348","4375","4345","4312","4436","4509","4550","",""],"variazione":"+"},{"nome":"APPOLLONI NICOLO'","dataNascita":"16/12/1996","sex":"M","posizione":"450","storico":["450","431","409","408","388","369","357","333","261","254"],"variazione":"-"},{"nome":"CAVALLO MATTEO","dataNascita":"15/08/1994","sex":"M","posizione":"491","storico":["491","527","588","596","635","565","551","538","516","600"],"variazione":"+"},{"nome":"GIULIONI CRISTIANO","dataNascita":"03/08/1983","sex":"M","posizione":"4968","storico":["4968","4914","4886","4952","4947","5224","5114","5258","5131","4965"],"variazione":"-"},{"nome":"SCHIAROLI ALESSANDRO","dataNascita":"16/09/1969","sex":"M","posizione":"5201","storico":["5201","5141","5113","5104","5103","5125","5148","5142","4884","4714"],"variazione":"-"},{"nome":"PERSICHINI RAFFAELE","dataNascita":"02/12/1997","sex":"M","posizione":"573","storico":["573","553","537","563","564","621","506","424","424","387"],"variazione":"-"}];
     const atletiFemmine = [{"nome":"PAUCCHI MARTINA","dataNascita":"29/08/1999","sex":"F","posizione":"236","storico":["236","254","253","247","240","234","223","219","213",""],"variazione":"+"},{"nome":"CONTI ANGELA","dataNascita":"14/10/1963","sex":"F","posizione":"373","storico":["373","361","362","359","353","348","341","333","334","319"],"variazione":"-"}];
-    
+
     const accordionItemTemplate = `
             <div class="accordion-item">
                       <h2 class="accordion-header">
@@ -46,33 +52,34 @@
                     </div>
     `;
 
-    function listaAtleti(atleti) {
-        const root = document.getElementById("lista-atleti-maschi");
+    function listaAtleti(atleti, rootElement) {
         for (let i = 0; i < atleti.length; i++) {
             const atleta = atleti[i];
 
             let atletaTemplate = accordionItemTemplate.replaceAll('##NomeAtleta', atleta.nome);
-            atletaTemplate = atletaTemplate.replaceAll('##IndiceAtleta', i);           
+            atletaTemplate = atletaTemplate.replaceAll('##IndiceAtleta', i);
             atletaTemplate = atletaTemplate.replaceAll('##PosizioneAtleta', atleta.posizione);
             atletaTemplate = atletaTemplate.replaceAll('##StoricoAlteta', atleta.storico.join(' - '));
 
-            if (atleta.variazione === '+'){
+            if (atleta.variazione === '+') {
                 atletaTemplate = atletaTemplate.replaceAll('##VariazioneAtleta', `<i class="fa fa-caret-up fa-lg" style='color:green' aria-hidden="true"></i>`);
             }
-            if (atleta.variazione === '-'){
+            if (atleta.variazione === '-') {
                 atletaTemplate = atletaTemplate.replaceAll('##VariazioneAtleta', `<i class="fa fa-caret-down fa-lg" style='color:red' aria-hidden="true"></i>`);
             }
-            if (atleta.variazione === '='){
+            if (atleta.variazione === '=') {
                 atletaTemplate = atletaTemplate.replaceAll('##VariazioneAtleta', ` <i class="fa fa-caret-left fa-lg" style='color:gray' aria-hidden="true"></i> <i class="fa fa-caret-right fa-lg" style='color:gray' aria-hidden="true"></i>`);
             }
-            root.innerHTML += atletaTemplate;
-           
+            rootElement.innerHTML += atletaTemplate;
+
         }
     }
 
     document.addEventListener('DOMContentLoaded', function () {
-        const root = document.getElementById("lista-atleti-maschi");
-        listaAtleti(atletiMaschi);
+        const rootMaschi = document.getElementById("lista-atleti-maschi");
+        const rootFemmine = document.getElementById("lista-atleti-maschi");
+        listaAtleti(atletiMaschi, rootMaschi);
+        listaAtleti(atletiFemmine, rootFemmine);
     }, false);
 </script>
 
