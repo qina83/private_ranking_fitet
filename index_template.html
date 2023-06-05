@@ -19,6 +19,13 @@
         .femminile {
             background-color: mistyrose;
         }
+
+        @media screen and (max-width: 992px) {
+            .atleta {
+                height: 50px;
+                background-color: blue;
+            }
+        }
     </style>
 </head>
 
@@ -136,11 +143,11 @@
         chart.update();
     }
 
-    
+
 
     document.addEventListener('DOMContentLoaded', function () {
 
-      
+
         const rootMaschi = document.getElementById("lista-atleti-maschi");
         const rootFemmine = document.getElementById("lista-atleti-femmine");
         listaAtleti(atletiFemmine, rootFemmine, 'femminile');
