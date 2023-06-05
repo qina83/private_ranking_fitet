@@ -52,12 +52,12 @@
                     </div>
     `;
 
-    function listaAtleti(atleti, rootElement) {
+    function listaAtleti(atleti, rootElement, offsetIndiceAtleta) {
         for (let i = 0; i < atleti.length; i++) {
             const atleta = atleti[i];
 
             let atletaTemplate = accordionItemTemplate.replaceAll('##NomeAtleta', atleta.nome);
-            atletaTemplate = atletaTemplate.replaceAll('##IndiceAtleta', i);
+            atletaTemplate = atletaTemplate.replaceAll('##IndiceAtleta', offsetIndiceAtleta+i);
             atletaTemplate = atletaTemplate.replaceAll('##PosizioneAtleta', atleta.posizione);
             atletaTemplate = atletaTemplate.replaceAll('##StoricoAlteta', atleta.storico.join(' - '));
 
@@ -78,8 +78,9 @@
     document.addEventListener('DOMContentLoaded', function () {
         const rootMaschi = document.getElementById("lista-atleti-maschi");
         const rootFemmine = document.getElementById("lista-atleti-femmine");
-        listaAtleti(atletiMaschi, rootMaschi);
-        listaAtleti(atletiFemmine, rootFemmine);
+        listaAtleti(atletiFemmine, rootFemmine, 0);
+        listaAtleti(atletiMaschi, rootMaschi, atletiFemmine.length);
+       
     }, false);
 </script>
 
