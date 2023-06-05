@@ -19,11 +19,11 @@
         .femminile {
             background-color: mistyrose;
         }
-
+        
         @media screen and (max-width: 992px) {
             .atleta {
-                height: 50px;
-                background-color: blue;
+                height: 100px;
+                padding: 40px;
             }
         }
     </style>
@@ -31,7 +31,7 @@
 
 <body>
     <div class="container">
-        <canvas id="myChart" style="margin-top:20px; width:80vw; height: 30vh;"></canvas>
+        <canvas id="myChart" style="margin-top:20px; width:80vw; height: 300px;"></canvas>
         </br>
         </br>
         </br>
@@ -58,7 +58,7 @@
 <script>
     const atletiMaschi = #ATLETI_MASCHI;
     const atletiFemmine = #ATLETI_FEMMINE;
-
+    
     const accordionItemTemplate = `
             <div class="atleta ##genere" onclick="aggiornaAndamento('##genere', ##IndiceAtleta)">
                           <div class="row w-100">  
@@ -105,7 +105,7 @@
                 labels: xValues,
                 datasets: [{
                     data: [],
-                    borderColor: "red",
+                    borderColor: "gray",
                     fill: false
                 }]
             },
@@ -114,9 +114,8 @@
                     y: {
                         reverse: true
                     }
-                },
-                legend: { display: false }
-            }
+                }        
+            }         
         });
     }
 
@@ -129,9 +128,7 @@
         }
 
         const posizioni = lista[indice].storico;
-        console.log(posizioni);
         const labels = [...Array(posizioni.length).keys()];
-        console.log(labels);
         updateData(chartAndamento, labels, posizioni)
     }
 
@@ -143,11 +140,11 @@
         chart.update();
     }
 
-
+    
 
     document.addEventListener('DOMContentLoaded', function () {
 
-
+      
         const rootMaschi = document.getElementById("lista-atleti-maschi");
         const rootFemmine = document.getElementById("lista-atleti-femmine");
         listaAtleti(atletiFemmine, rootFemmine, 'femminile');
