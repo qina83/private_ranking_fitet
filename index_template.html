@@ -90,19 +90,24 @@
 
     function createChart() {
 
-        const xValues = [100, 200, 300, 400, 500, 600, 700, 800, 900, 1000];
+        const xValues = [];
 
         return new Chart("myChart", {
             type: "line",
             data: {
                 labels: xValues,
                 datasets: [{
-                    data: [860, 1140, 1060, 1060, 1070, 1110, 1330, 2210, 7830, 2478],
+                    data: [],
                     borderColor: "red",
                     fill: false
                 }]
             },
             options: {
+                scales: {
+                    y: {
+                        reverse: true
+                    }
+                },
                 legend: { display: false }
             }
         });
@@ -117,8 +122,10 @@
         }
 
         const posizioni = lista[indice].storico;
+        console.log(posizioni);
         const labels = [...Array(posizioni.length).keys()];
-        updateData(chartAndamento, [1, 2, 3, 4, 5], posizioni)
+        console.log(labels);
+        updateData(chartAndamento, labels, posizioni)
     }
 
     function updateData(chart, labels, data) {
