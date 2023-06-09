@@ -58,7 +58,7 @@ async function readClassifica(atleti) {
         atleti[i].variazione = '=';
         for (let j = 2; j < 12; j++) {
             try {
-                await highlight(tableCell({ row: j, col: 2 }, below('Storico posizioni nella classifica individuale')));
+                //await highlight(tableCell({ row: j, col: 2 }, below('Storico posizioni nella classifica individuale')));
                 let storico = await tableCell({ row: j, col: 2 }, below('Storico posizioni nella classifica individuale')).text()
                 atleti[i].storico.unshift(parseInt(storico))
             }

@@ -19,7 +19,29 @@
         .femminile {
             background-color: mistyrose;
         }
-        
+
+        .chartContainer {
+            width: 100%;
+            -webkit-box-shadow: 0px 5px 15px -6px #000000;
+            box-shadow: 0px 5px 15px -6px #000000;
+            margin-bottom: 10px;
+        }
+
+        .atletiContainer {
+            overflow-x: hidden;           
+            overflow-y: auto;
+            max-height: calc(90vh - 380px);
+        }
+
+        .globalContainer {
+            width: 100%;
+        }
+
+        .title {
+            text-align: center;
+            width: 100%;            
+        }
+
         @media screen and (max-width: 992px) {
             .atleta {
                 height: 100px;
@@ -30,21 +52,28 @@
 </head>
 
 <body>
-    <div class="container">
-        <canvas id="myChart" style="margin-top:20px; width:80vw; height: 300px;"></canvas>
-        </br>
-        </br>
-        </br>
-        <div class="row">
-            <div class="col">
-                <div class="accordion" id='lista-atleti-femmine'>
+    <div class="globalContainer">  
+        <div class='chartContainer'>
+            <div class="title">
+                <h2>Andamento</h2>
+            </div>
+            <canvas id="myChart" style="width:90vw; height: 300px;"></canvas>
+        </div>
+        <div class="title">
+            <h2>Pongisti</h2>
+        </div>
+        <div class='atletiContainer'>
+            <div class="row">
+                <div class="col">              
+                    <div class="accordion" id='lista-atleti-femmine'>
 
-                </div>
-                </br>
-                </br>
-                </br>
-                <div class="accordion" id='lista-atleti-maschi'>
+                    </div>
+                    </br>
+                    </br>
+                    </br>
+                    <div class="accordion" id='lista-atleti-maschi'>
 
+                    </div>
                 </div>
             </div>
         </div>
@@ -104,9 +133,10 @@
             data: {
                 labels: xValues,
                 datasets: [{
+                    label: 'seleziona un atleta',
                     data: [],
                     borderColor: "gray",
-                    fill: false
+                    fill: true
                 }]
             },
             options: {
@@ -114,8 +144,18 @@
                     y: {
                         reverse: true
                     }
-                }        
-            }         
+                },
+                plugins: {
+                  legend: {
+                     display: true,
+                     position: 'bottom',
+                     align: 'center',
+                     labels: {
+                        color: 'black'
+                     }
+                  }
+                }
+            }
         });
     }
 
@@ -129,10 +169,11 @@
 
         const posizioni = lista[indice].storico;
         const labels = [...Array(posizioni.length).keys()];
-        updateData(chartAndamento, labels, posizioni)
+        updateData(chartAndamento, labels, posizioni, lista[indice].nome)
     }
 
-    function updateData(chart, labels, data) {
+    function updateData(chart, labels, data, atleta) {
+        chart.data.datasets[0].label = atleta;
         chart.data.labels = labels;
         chart.data.datasets.forEach((dataset) => {
             dataset.data = data;
@@ -140,11 +181,11 @@
         chart.update();
     }
 
-    
+
 
     document.addEventListener('DOMContentLoaded', function () {
 
-      
+
         const rootMaschi = document.getElementById("lista-atleti-maschi");
         const rootFemmine = document.getElementById("lista-atleti-femmine");
         listaAtleti(atletiFemmine, rootFemmine, 'femminile');
