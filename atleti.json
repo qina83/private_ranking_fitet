@@ -63,5 +63,60 @@
         "nome": "CONTI ANGELA",
         "dataNascita": "14/10/1963",
         "sex": "F"
+    },
+    {
+        "nome": "CESARINI ALESSANDRA",
+        "dataNascita": "22/08/1991",
+        "sex": "F"
+    },
+    {
+        "nome": "RUSSO LUCIA",
+        "dataNascita": "28/05/1967",
+        "sex": "F"
+    },
+    {
+        "nome": "FIORENTINI LORENZO",
+        "dataNascita": "05/06/1998",
+        "sex": "M"
+    },
+    {
+        "nome": "MANONI LUIGI",
+        "dataNascita": "13/12/1954",
+        "sex": "M"
+    },
+    {
+        "nome": "AZZALINI MICHELE",
+        "dataNascita": "22/11/1971",
+        "sex": "M"
+    },
+    {
+        "nome": "FASULO EDUARDO",
+        "dataNascita": "17/07/1959",
+        "sex": "M"
+    },
+    {
+        "nome": "PAPAVERI DORIANO",
+        "dataNascita": "14/10/1964",
+        "sex": "M"
+    },
+    {
+        "nome": "ANGELUCCI MATTEO",
+        "dataNascita": "18/09/2003",
+        "sex": "M"
+    },
+    {
+        "nome": "FABRI MARCO",
+        "dataNascita": "26/04/1977",
+        "sex": "M"
+    },
+    {
+        "nome": "IERONFANTICO ANDREA",
+        "dataNascita": "04/01/2004",
+        "sex": "M"
+    },
+    {
+        "nome": "PIOPPI RAFFAELE",
+        "dataNascita": "23/06/2004",
+        "sex": "M"
     }
 ]
